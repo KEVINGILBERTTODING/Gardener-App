@@ -85,7 +85,10 @@ public class RegisterActivity extends AppCompatActivity {
             binding.etPassword.setError("Tidak boleh kosong");
         }else if (binding.etPassword.getText().toString().length() > 150) {
             binding.etEmail.setError("Tidak boleh lebih dari 150");
-        }else {
+        }else if (binding.etName.getText().length() < 5) {
+            binding.etName.setError("Tidak boleh kurang dari 5 karakter");
+        }
+        else {
             register();
         }
 
