@@ -11,4 +11,8 @@ public class Constants {
     public static final String ERROR_RESPONSE = "error";
     public static final String SOMETHING_WENT_WRONG = "Something went wrong";
     public static final String API_KEY = "phplaravelcoii";
+    public static final String USER_ID = "id";
+    public static final String NAME = "name";
+    public static final String EMAIL = "email";
+    public static final String LOGIN_SESSION = "login_session";
 }

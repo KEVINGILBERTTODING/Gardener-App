@@ -40,4 +40,22 @@ public class AuthViewModel extends ViewModel {
         return responseModelMutableLiveData;
     }
 
+    public LiveData<ResponseModel<UsersModel>> login (String email, String password) {
+        MutableLiveData<ResponseModel<UsersModel>> responseModelMutableLiveData = new MutableLiveData<>();
+        if (email == null || password == null && email.isEmpty() && password.isEmpty()){
+            responseModelMutableLiveData.setValue(new ResponseModel<>(Constants.FAILED_RESPONSE, null, Constants.SOMETHING_WENT_WRONG));
+        }else {
+            LiveData<ResponseModel<UsersModel>> responseModelLiveData = authRepository.login(email, password);
+            responseModelLiveData.observeForever(new Observer<ResponseModel<UsersModel>>() {
+                @Override
+                public void onChanged(ResponseModel<UsersModel> usersModelResponseModel) {
+                    responseModelMutableLiveData.setValue(usersModelResponseModel);
+                    responseModelLiveData.removeObserver(this);
+                }
+            });
+        }
+
+        return responseModelMutableLiveData;
+    }
+
 }

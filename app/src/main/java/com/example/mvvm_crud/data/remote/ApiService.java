@@ -22,5 +22,15 @@ public interface ApiService {
             @Field("password") String password
     );
 
+    @FormUrlEncoded
+    @POST("login")
+    Call<ResponseModel<UsersModel>> login(
+            @Header("API-KEY") String apiKey,
+            @Field("email") String email,
+            @Field("password") String password
+    );
+
+
+
 
 }
