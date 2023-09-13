@@ -14,6 +14,9 @@ import com.example.mvvm_crud.ui.fragments.main.ProfileFragment;
 import com.example.mvvm_crud.ui.fragments.main.SearchFragment;
 import com.google.android.material.navigation.NavigationBarView;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
 

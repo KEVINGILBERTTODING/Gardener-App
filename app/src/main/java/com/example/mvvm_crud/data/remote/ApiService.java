@@ -1,7 +1,10 @@
 package com.example.mvvm_crud.data.remote;
 
+import com.example.mvvm_crud.model.ProductsModel;
 import com.example.mvvm_crud.model.ResponseModel;
 import com.example.mvvm_crud.model.UsersModel;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -28,6 +31,11 @@ public interface ApiService {
             @Header("API-KEY") String apiKey,
             @Field("email") String email,
             @Field("password") String password
+    );
+
+    @GET("product")
+    Call<ResponseModel<List<ProductsModel>>> getAllProduct(
+            @Header("API-KEY") String apiKey
     );
 
 

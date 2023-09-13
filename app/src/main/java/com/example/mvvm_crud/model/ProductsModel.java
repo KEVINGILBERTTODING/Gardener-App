@@ -1,5 +1,7 @@
 package com.example.mvvm_crud.model;
 
+import com.example.mvvm_crud.util.Constants;
+
 public class ProductsModel {
     private String product_name;
     private String price;
@@ -39,7 +41,7 @@ public class ProductsModel {
     }
 
     public String getImage() {
-        return image;
+        return Constants.STORAGE_IMAGE + image;
     }
 
     public void setImage(String image) {
