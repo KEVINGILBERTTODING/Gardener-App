@@ -3,7 +3,7 @@ Simple crud application by implementing the MVVM (Model-View-ViewModel) architec
 Tech stack:
 1. Java (Android native)
 2. MVVM architecture
-3. Hilt as Dependencies Injection
+3. Hilt as Dependencies Injection lib
 4. Retrofit
-7. RESTful API using laravel
+7. RESTful API using laravel https://github.com/KEVINGILBERTTODING/lshop-restful
 8. Glide
