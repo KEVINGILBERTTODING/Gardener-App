@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -27,6 +28,7 @@ import com.example.mvvm_crud.ui.adapters.products.ProductAdapter;
 import com.example.mvvm_crud.util.Constants;
 import com.example.mvvm_crud.viewmodel.ProductViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dagger.Binds;
@@ -150,9 +152,41 @@ public class HomeFragment extends Fragment {
                 getProduct();
             }
         });
+
+        binding.searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filter(newText);
+                return false;
+            }
+        });
     }
 
     private void showToast(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+    }
+
+    public void filter(String query) {
+        ArrayList<ProductsModel> filteredlist = new ArrayList<>();
+        for (ProductsModel item : productsModelList) {
+            if (productsModelList != null && item.getProduct_name().toLowerCase().contains(query.toLowerCase())) {
+                filteredlist.add(item);
+            }
+        }
+
+        productAdapter.filter(filteredlist);
+
+        if (filteredlist.isEmpty()) {
+            binding.tvEmpty.setVisibility(View.VISIBLE);
+            binding.tvEmpty.setText("Tidak ada hasil");
+        }else {
+            binding.tvEmpty.setVisibility(View.GONE);
+            productAdapter.filter(filteredlist);
+        }
     }
 }
