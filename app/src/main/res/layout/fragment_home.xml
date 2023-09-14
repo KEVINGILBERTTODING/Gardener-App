@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         tools:context=".ui.fragments.main.HomeFragment"
         android:layout_width="match_parent"
         android:background="@color/white"
@@ -122,8 +122,6 @@
 
 
 
-
-
         <RelativeLayout
             android:id="@+id/rlBottomSheet"
             android:layout_width="match_parent"
@@ -141,6 +139,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"/>
                 <RelativeLayout
+                    android:id="@+id/rlDetail"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_below="@id/botdrag"
                     android:layout_height="wrap_content">
@@ -244,6 +244,114 @@
                         </androidx.core.widget.NestedScrollView>
                     </LinearLayout>
                 </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/rlInsert"
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/botdrag"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="New Product"
+                            android:textColor="@color/black"
+                            android:layout_gravity="center"
+                            android:textSize="@dimen/_12sdp"
+                            android:fontFamily="@font/popmed"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:background="@color/overlay"/>
+
+                        <androidx.core.widget.NestedScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:orientation="vertical"
+                                android:layout_height="wrap_content">
+
+                                <RelativeLayout
+                                    android:id="@+id/rlImagePicker"
+                                    android:layout_width="match_parent"
+                                    android:layout_marginTop="@dimen/_20sdp"
+                                    android:padding="@dimen/_15sdp"
+                                    android:layout_height="@dimen/_200sdp"
+                                    android:background="@drawable/border_photo">
+                                    <ImageView
+                                        android:id="@+id/ivProductSample"
+                                        android:visibility="gone"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/_200sdp"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerInParent="true"
+                                        android:fontFamily="@font/popmed"
+                                        android:gravity="center"
+                                        android:id="@+id/tvImagePicker"
+                                        android:text="Click disini untuk menambahkan gambar"
+                                        android:textSize="@dimen/_10sdp" />
+
+                                </RelativeLayout>
+
+                                <EditText
+                                    android:id="@+id/etProductName"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/black"
+                                    android:includeFontPadding="false"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:fontFamily="@font/popsem"
+                                    android:textSize="@dimen/_12sdp"
+                                    android:hint="Product name"/>
+
+                                <EditText
+                                    android:id="@+id/etProductPrice"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/black"
+                                    android:includeFontPadding="false"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:fontFamily="@font/popsem"
+                                    android:inputType="number"
+                                    android:hint="Product price"
+                                    android:textSize="@dimen/_12sdp"/>
+
+
+                                <EditText
+                                    android:id="@+id/etDesc"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/black"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:fontFamily="@font/popreg"
+                                    android:hint="Deskripsi"
+                                    android:textSize="@dimen/_12sdp"
+                                    />
+
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/btnSubmit"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:cornerRadius="@dimen/_10sdp"
+                                    android:layout_marginTop="@dimen/_20sdp"
+                                    android:text="Save"/>
+
+
+
+                            </LinearLayout>
+                        </androidx.core.widget.NestedScrollView>
+                    </LinearLayout>
+                </RelativeLayout>
+
 
             </RelativeLayout>
         </RelativeLayout>

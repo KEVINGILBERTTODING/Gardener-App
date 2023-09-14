@@ -10,9 +10,11 @@ import com.example.mvvm_crud.util.Constants;
 import com.google.gson.Gson;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -65,6 +67,30 @@ public class ProductRepository {
             public void onFailure(Call<ResponseModel> call, Throwable t) {
 
                 responseModelMutableLiveData.setValue(new ResponseModel(Constants.FAILED_RESPONSE, null, Constants.SOMETHING_WENT_WRONG));
+
+            }
+        });
+
+        return  responseModelMutableLiveData;
+    }
+
+    public LiveData<ResponseModel> insertData(Map map, MultipartBody.Part file) {
+        MutableLiveData<ResponseModel> responseModelMutableLiveData = new MutableLiveData<>();
+        apiService.insertData(Constants.API_KEY,  map, file).enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                if (response.isSuccessful()) {
+                    responseModelMutableLiveData.setValue(new ResponseModel(Constants.SUCCESS_RESPONSE, null, "Yeay berhasiil menambahkan produk baru"));
+                }else {
+
+                    responseModelMutableLiveData.setValue(new ResponseModel(Constants.FAILED_RESPONSE, null, response.body().getMessage()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                responseModelMutableLiveData.setValue(new ResponseModel(Constants.FAILED_RESPONSE, null, Constants.SOMETHING_WENT_WRONG));
+
 
             }
         });
