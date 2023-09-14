@@ -24,6 +24,7 @@ import com.example.mvvm_crud.R;
 import com.example.mvvm_crud.databinding.FragmentHomeBinding;
 import com.example.mvvm_crud.model.ProductsModel;
 import com.example.mvvm_crud.model.ResponseModel;
+import com.example.mvvm_crud.ui.ItemClickListener;
 import com.example.mvvm_crud.ui.adapters.products.ProductAdapter;
 import com.example.mvvm_crud.util.Constants;
 import com.example.mvvm_crud.viewmodel.ProductViewModel;
@@ -36,7 +37,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 import dagger.hilt.android.HiltAndroidApp;
 
 @AndroidEntryPoint
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements ItemClickListener {
 
     private FragmentHomeBinding binding;
     private SharedPreferences sharedPreferences;
@@ -94,6 +95,7 @@ public class HomeFragment extends Fragment {
                         binding.rvProduct.setAdapter(productAdapter);
                         binding.rvProduct.setLayoutManager(gridLayoutManager);
                         binding.rvProduct.setHasFixedSize(true);
+                        productAdapter.setItemClickListener(HomeFragment.this);
 
                     }else {
                         hideShimmer(true, "Tidak ada produk");
@@ -188,5 +190,12 @@ public class HomeFragment extends Fragment {
             binding.tvEmpty.setVisibility(View.GONE);
             productAdapter.filter(filteredlist);
         }
+    }
+
+
+    @Override
+    public void onItemClick(Object model) {
+        ProductsModel productsModel = (ProductsModel) model;
+        showToast(productsModel.getProduct_name());
     }
 }
