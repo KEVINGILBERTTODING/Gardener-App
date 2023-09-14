@@ -20,6 +20,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.mvvm_crud.R;
 import com.example.mvvm_crud.databinding.FragmentHomeBinding;
 import com.example.mvvm_crud.model.ProductsModel;
@@ -28,7 +30,9 @@ import com.example.mvvm_crud.ui.ItemClickListener;
 import com.example.mvvm_crud.ui.adapters.products.ProductAdapter;
 import com.example.mvvm_crud.util.Constants;
 import com.example.mvvm_crud.viewmodel.ProductViewModel;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +50,9 @@ public class HomeFragment extends Fragment implements ItemClickListener {
     private ProductAdapter productAdapter;
     private GridLayoutManager gridLayoutManager;
     private List<ProductsModel> productsModelList;
-
+    private BottomSheetBehavior bottomSheetBehavior;
+    private String productId = null;
+    private Integer productPostion;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,10 +82,12 @@ public class HomeFragment extends Fragment implements ItemClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         listener();
+        setUpBottomSheet();
         getProduct();
     }
 
     private void getProduct() {
+        binding.rvProduct.setAdapter(null);
         binding.swipeRefresh.setRefreshing(true);
         showShimmer();
         productViewModel.getAllProducts().observe(getViewLifecycleOwner(), new Observer<ResponseModel<List<ProductsModel>>>() {
@@ -95,6 +103,7 @@ public class HomeFragment extends Fragment implements ItemClickListener {
                         binding.rvProduct.setAdapter(productAdapter);
                         binding.rvProduct.setLayoutManager(gridLayoutManager);
                         binding.rvProduct.setHasFixedSize(true);
+                        productAdapter.notifyDataSetChanged();
                         productAdapter.setItemClickListener(HomeFragment.this);
 
                     }else {
@@ -167,6 +176,15 @@ public class HomeFragment extends Fragment implements ItemClickListener {
                 return false;
             }
         });
+
+        binding.overlay.setOnClickListener(view -> {
+            hideBottomSheet();
+        });
+
+        binding.btnDelete.setOnClickListener(view -> {
+            deleteProduct();
+
+        });
     }
 
     private void showToast(String message) {
@@ -192,10 +210,72 @@ public class HomeFragment extends Fragment implements ItemClickListener {
         }
     }
 
+    private void setUpBottomSheet() {
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.rlBottomSheet);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        bottomSheetBehavior.setPeekHeight(0);
+        bottomSheetBehavior.setHideable(true);
+
+        bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+                    hideBottomSheet();
+                }
+
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
+
+    }
+
+    private void showBottomSheet() {
+        binding.overlay.setVisibility(View.VISIBLE);
+        bottomSheetBehavior.setPeekHeight(600);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+    }
+
+    private void hideBottomSheet() {
+        binding.overlay.setVisibility(View.GONE);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+    }
+
+    private void deleteProduct() {
+        productViewModel.deleteProduct(productId).observe(getViewLifecycleOwner(), new Observer<ResponseModel>() {
+            @Override
+            public void onChanged(ResponseModel responseModel) {
+                if (responseModel.getStatus().equals(Constants.SUCCESS_RESPONSE)) {
+                    showToast(responseModel.getMessage());
+                    getProduct();
+                    hideBottomSheet();
+                }else {
+                    showToast(responseModel.getMessage());
+                }
+            }
+        });
+    }
+
 
     @Override
-    public void onItemClick(Object model) {
+    public void onItemClick(Integer potion, Object model) {
         ProductsModel productsModel = (ProductsModel) model;
-        showToast(productsModel.getProduct_name());
+        showBottomSheet();
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+        binding.tvProductName.setText(productsModel.getProduct_name());
+        binding.tvPrice.setText("Rp. " + decimalFormat.format(Double.parseDouble(productsModel.getPrice())));
+        binding.tvDesc.setText(productsModel.getDescription());
+        productId = productsModel.getId();
+
+        if (potion == null && productsModel.getId() == null) {
+            binding.btnEdit.setEnabled(false);
+            binding.btnDelete.setEnabled(false);
+        }
+
+        Glide.with(getContext()).load(productsModel.getImage()).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(binding.ivFlwer);
     }
 }

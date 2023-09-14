@@ -38,6 +38,13 @@ public interface ApiService {
             @Header("API-KEY") String apiKey
     );
 
+    @FormUrlEncoded
+    @POST("product/delete")
+    Call<ResponseModel> deleteProduct(
+            @Header("API-KEY") String apiKey,
+            @Field("id") String id
+    );
+
 
 
 

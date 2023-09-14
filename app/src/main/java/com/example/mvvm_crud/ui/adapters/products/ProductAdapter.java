@@ -35,6 +35,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     public void setItemClickListener(ItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
+        notifyDataSetChanged();
     }
     @NonNull
     @Override
@@ -55,9 +56,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 .centerCrop()
                 .into(holder.ivProduct);
 
+        holder.btnDetail.setOnClickListener(view -> {
+            if (itemClickListener != null) {
+                itemClickListener.onItemClick(holder.getAdapterPosition(), productsModelList.get(holder.getAdapterPosition()));
+            }
+        });
 
-
-
+        
 
     }
 
@@ -71,7 +76,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvPrice, tvProductName;
         private ImageView ivProduct;
         private Button btnDetail;
@@ -83,14 +89,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             ivProduct = itemView.findViewById(R.id.ivProduct);
             btnDetail = itemView.findViewById(R.id.btnDetail);
 
-            itemView.setOnClickListener(this);
+
         }
 
-        @Override
-        public void onClick(View view) {
-            if (itemClickListener != null) {
-                itemClickListener.onItemClick(productsModelList.get(getAdapterPosition()));
-            }
-        }
+
     }
 }

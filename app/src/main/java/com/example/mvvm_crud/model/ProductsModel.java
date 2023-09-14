@@ -3,16 +3,18 @@ package com.example.mvvm_crud.model;
 import com.example.mvvm_crud.util.Constants;
 
 public class ProductsModel {
+    private String id;
     private String product_name;
     private String price;
     private String description;
     private String image;
 
-    public ProductsModel(String product_name, String price, String description, String image) {
+    public ProductsModel(String id, String product_name, String price, String description, String image) {
         this.product_name = product_name;
         this.price = price;
         this.description = description;
         this.image = image;
+        this.id = id;
     }
 
 
@@ -46,5 +48,13 @@ public class ProductsModel {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

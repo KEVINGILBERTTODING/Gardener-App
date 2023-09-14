@@ -25,6 +25,7 @@
                 android:layout_width="match_parent"
                 android:text="Sepatu Kulitssssssssssssssssssssssssssssssssssssssssss"
                 android:textSize="@dimen/_10sdp"
+                android:fontFamily="@font/popreg"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content"/>
 
@@ -33,7 +34,8 @@
                 android:layout_margin="@dimen/_5sdp"
                 android:layout_width="match_parent"
                 android:text="Rp. 3000.000"
-                android:textSize="@dimen/_12sdp"
+                android:fontFamily="@font/popmed"
+                android:textSize="@dimen/_11sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_height="wrap_content"/>
 

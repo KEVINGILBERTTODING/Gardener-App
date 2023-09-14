@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
@@ -61,6 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onChanged(ResponseModel<UsersModel> usersModelResponseModel) {
                 if (usersModelResponseModel.getStatus().equals(Constants.SUCCESS_RESPONSE)) {
                     showToast(usersModelResponseModel.getMessage());
+                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                 }else {
                     showToast(usersModelResponseModel.getMessage());
                 }
