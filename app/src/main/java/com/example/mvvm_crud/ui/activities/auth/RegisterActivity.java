@@ -46,6 +46,10 @@ public class RegisterActivity extends AppCompatActivity {
             validateInput();
         });
 
+        binding.tvLogin.setOnClickListener(view -> {
+            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+        });
+
     }
 
     private void init() {
