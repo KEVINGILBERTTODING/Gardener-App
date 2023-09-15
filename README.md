@@ -8,5 +8,5 @@ Tech stack:
 7. RESTful API using laravel https://github.com/KEVINGILBERTTODING/lshop-restful
 8. Glide
 
+![Group 40](https://github.com/KEVINGILBERTTODING/Gardener-App/assets/79959818/1f08dcab-a4e8-484f-8ede-85fedf445620)
 
-![Group 39](https://github.com/KEVINGILBERTTODING/MVVM-CRUD/assets/79959818/e2a604ea-a969-4707-a800-c75c3dbb8b06)
