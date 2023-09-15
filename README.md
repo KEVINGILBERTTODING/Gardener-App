@@ -1,5 +1,5 @@
 # Gardener 💚
-Simple crud application by implementing the MVVM (Model-View-ViewModel) architecture and dependency injection using hilt.
+Gardener is a simple CRUD application by implementing the MVVM (Model-View-ViewModel) architecture and dependency injection using hilt.
 Tech stack:
 1. Java (Android native)
 2. MVVM architecture
