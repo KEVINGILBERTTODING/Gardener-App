@@ -100,4 +100,22 @@ public class ProductViewModel extends ViewModel {
         }
         return responseModelMutableLiveData;
     }
+
+    public LiveData<ResponseModel<List<ProductsModel>>> filterData(String query){
+        MutableLiveData<ResponseModel<List<ProductsModel>>> responseModelMutableLiveData = new MutableLiveData<>();
+        if (query == null && query.isEmpty()){
+            responseModelMutableLiveData.setValue(new ResponseModel<>(Constants.FAILED_RESPONSE, null, Constants.SOMETHING_WENT_WRONG));
+        }else {
+            LiveData<ResponseModel<List<ProductsModel>>> responseModelLiveData = productRepository.filterProduct(query);
+            responseModelLiveData.observeForever(new Observer<ResponseModel<List<ProductsModel>>>() {
+                @Override
+                public void onChanged(ResponseModel<List<ProductsModel>> productsModelResponseModel) {
+                    responseModelMutableLiveData.setValue(productsModelResponseModel);
+                    responseModelLiveData.removeObserver(this);
+                }
+            });
+
+        }
+        return responseModelMutableLiveData;
+    }
 }

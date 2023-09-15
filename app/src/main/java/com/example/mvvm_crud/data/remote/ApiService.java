@@ -73,6 +73,12 @@ public interface ApiService {
             @PartMap Map<String, RequestBody> textData
     );
 
+    @GET("product/filter")
+    Call<ResponseModel<List<ProductsModel>>> filterData(
+            @Header("API-KEY") String apiKey,
+            @Query("query") String query
+    );
+
 
 
 

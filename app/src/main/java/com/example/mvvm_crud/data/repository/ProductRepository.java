@@ -148,4 +148,29 @@ public class ProductRepository {
 
         return  responseModelMutableLiveData;
     }
+
+    public LiveData<ResponseModel<List<ProductsModel>>> filterProduct(String query) {
+        MutableLiveData<ResponseModel<List<ProductsModel>>> responseModelMutableLiveData = new MutableLiveData<>();
+        apiService.filterData(Constants.API_KEY, query).enqueue(new Callback<ResponseModel<List<ProductsModel>>>() {
+            @Override
+            public void onResponse(Call<ResponseModel<List<ProductsModel>>> call, Response<ResponseModel<List<ProductsModel>>> response) {
+                if (response.isSuccessful()) {
+                    responseModelMutableLiveData.setValue(response.body());
+                }else {
+                    Gson gson = new Gson();
+                    ResponseModel responseModel = gson.fromJson(response.errorBody().charStream(), ResponseModel.class);
+                    responseModelMutableLiveData.setValue(new ResponseModel<>(Constants.FAILED_RESPONSE, null, responseModel.getMessage()));
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel<List<ProductsModel>>> call, Throwable t) {
+
+                responseModelMutableLiveData.setValue(new ResponseModel<>(Constants.FAILED_RESPONSE, null, Constants.SOMETHING_WENT_WRONG));
+            }
+        });
+        return  responseModelMutableLiveData;
+
+    }
 }
