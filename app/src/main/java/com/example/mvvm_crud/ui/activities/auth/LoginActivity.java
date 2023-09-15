@@ -64,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString(Constants.NAME, usersModelResponseModel.getData().getName());
                             editor.apply();
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            finish();
 
                         }else {
                             showToast(usersModelResponseModel.getMessage());
@@ -92,6 +93,7 @@ public class LoginActivity extends AppCompatActivity {
     private void validateLogin() {
         if (sharedPreferences.getBoolean(Constants.LOGIN_SESSION, false) == true) {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
         }
     }
 

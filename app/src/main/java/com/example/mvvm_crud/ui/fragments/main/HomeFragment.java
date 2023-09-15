@@ -340,7 +340,7 @@ public class HomeFragment extends Fragment implements ItemClickListener {
     private void showBottomSheet() {
         binding.overlay.setVisibility(View.VISIBLE);
         bottomSheetBehavior.setPeekHeight(600);
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
     private void hideBottomSheet() {
