@@ -1,4 +1,4 @@
-# MVVM-CRUD 💚
+# Gardener 💚
 Simple crud application by implementing the MVVM (Model-View-ViewModel) architecture and dependency injection using hilt.
 Tech stack:
 1. Java (Android native)
