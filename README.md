@@ -7,3 +7,6 @@ Tech stack:
 4. Retrofit
 7. RESTful API using laravel https://github.com/KEVINGILBERTTODING/lshop-restful
 8. Glide
+
+
+![Group 39](https://github.com/KEVINGILBERTTODING/MVVM-CRUD/assets/79959818/e2a604ea-a969-4707-a800-c75c3dbb8b06)
