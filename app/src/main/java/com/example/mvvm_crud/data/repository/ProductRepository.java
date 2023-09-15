@@ -97,4 +97,55 @@ public class ProductRepository {
 
         return  responseModelMutableLiveData;
     }
+
+    public LiveData<ResponseModel> updateDataimage(Map map, MultipartBody.Part file) {
+        MutableLiveData<ResponseModel> responseModelMutableLiveData = new MutableLiveData<>();
+        apiService.updateDataImage(Constants.API_KEY,  map, file).enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                if (response.isSuccessful()) {
+                    responseModelMutableLiveData.setValue(new ResponseModel(Constants.SUCCESS_RESPONSE, null, "Yeay berhasiil menambahkan produk baru"));
+                }else {
+                    Gson gson = new Gson();
+                    ResponseModel responseModel = gson.fromJson(response.errorBody().charStream(), ResponseModel.class);
+                    responseModelMutableLiveData.setValue(new ResponseModel(Constants.FAILED_RESPONSE, null, responseModel.getMessage()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                responseModelMutableLiveData.setValue(new ResponseModel(Constants.FAILED_RESPONSE, null, Constants.SOMETHING_WENT_WRONG));
+
+
+            }
+        });
+
+        return  responseModelMutableLiveData;
+    }
+
+    public LiveData<ResponseModel> updateData(Map map) {
+        MutableLiveData<ResponseModel> responseModelMutableLiveData = new MutableLiveData<>();
+        apiService.updateData(Constants.API_KEY,  map).enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                if (response.isSuccessful()) {
+                    responseModelMutableLiveData.setValue(new ResponseModel(Constants.SUCCESS_RESPONSE, null, "Yeay berhasiil menambahkan produk baru"));
+                }else {
+
+                    Gson gson = new Gson();
+                    ResponseModel responseModel = gson.fromJson(response.errorBody().charStream(), ResponseModel.class);
+                    responseModelMutableLiveData.setValue(new ResponseModel(Constants.FAILED_RESPONSE, null, responseModel.getMessage()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                responseModelMutableLiveData.setValue(new ResponseModel(Constants.FAILED_RESPONSE, null, Constants.SOMETHING_WENT_WRONG));
+
+
+            }
+        });
+
+        return  responseModelMutableLiveData;
+    }
 }

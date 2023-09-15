@@ -138,6 +138,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"/>
+
+<!--                Layout detail-->
                 <RelativeLayout
                     android:id="@+id/rlDetail"
                     android:visibility="gone"
@@ -244,6 +246,8 @@
                         </androidx.core.widget.NestedScrollView>
                     </LinearLayout>
                 </RelativeLayout>
+
+<!--                layout insert-->
                 <RelativeLayout
                     android:id="@+id/rlInsert"
                     android:layout_width="match_parent"

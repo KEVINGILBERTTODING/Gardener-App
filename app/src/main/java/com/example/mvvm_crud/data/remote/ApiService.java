@@ -58,6 +58,21 @@ public interface ApiService {
             @Part MultipartBody.Part file
             );
 
+    @Multipart
+    @POST("product/update")
+    Call<ResponseModel> updateDataImage(
+            @Header("API-KEY") String apiKey,
+            @PartMap Map<String, RequestBody> textData,
+            @Part MultipartBody.Part file
+    );
+
+    @Multipart
+    @POST("product/update")
+    Call<ResponseModel> updateData(
+            @Header("API-KEY") String apiKey,
+            @PartMap Map<String, RequestBody> textData
+    );
+
 
 
 

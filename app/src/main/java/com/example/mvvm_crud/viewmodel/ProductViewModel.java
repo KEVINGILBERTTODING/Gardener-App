@@ -67,4 +67,37 @@ public class ProductViewModel extends ViewModel {
         return responseModelMutableLiveData;
     }
 
+    public LiveData<ResponseModel> update(Map map, MultipartBody.Part file) {
+        MutableLiveData<ResponseModel> responseModelMutableLiveData = new MutableLiveData<>();
+        if (map == null) {
+            responseModelMutableLiveData.setValue(new ResponseModel(Constants.FAILED_RESPONSE, null, Constants.SOMETHING_WENT_WRONG));
+        }else {
+            LiveData<ResponseModel> responseModelLiveData = productRepository.updateDataimage(map, file);
+            responseModelLiveData.observeForever(new Observer<ResponseModel>() {
+                @Override
+                public void onChanged(ResponseModel responseModel) {
+                    responseModelMutableLiveData.setValue(responseModel);
+                    responseModelLiveData.removeObserver(this);
+                }
+            });
+        }
+        return responseModelMutableLiveData;
+    }
+
+    public LiveData<ResponseModel> updateData(Map map) {
+        MutableLiveData<ResponseModel> responseModelMutableLiveData = new MutableLiveData<>();
+        if (map == null) {
+            responseModelMutableLiveData.setValue(new ResponseModel(Constants.FAILED_RESPONSE, null, Constants.SOMETHING_WENT_WRONG));
+        }else {
+            LiveData<ResponseModel> responseModelLiveData = productRepository.updateData(map);
+            responseModelLiveData.observeForever(new Observer<ResponseModel>() {
+                @Override
+                public void onChanged(ResponseModel responseModel) {
+                    responseModelMutableLiveData.setValue(responseModel);
+                    responseModelLiveData.removeObserver(this);
+                }
+            });
+        }
+        return responseModelMutableLiveData;
+    }
 }

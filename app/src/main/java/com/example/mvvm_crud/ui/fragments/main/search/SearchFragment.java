@@ -1,4 +1,4 @@
-package com.example.mvvm_crud.ui.fragments.main;
+package com.example.mvvm_crud.ui.fragments.main.search;
 
 import android.os.Bundle;
 

@@ -37,6 +37,7 @@ import com.example.mvvm_crud.model.ProductsModel;
 import com.example.mvvm_crud.model.ResponseModel;
 import com.example.mvvm_crud.ui.ItemClickListener;
 import com.example.mvvm_crud.ui.adapters.products.ProductAdapter;
+import com.example.mvvm_crud.ui.fragments.main.products.UpdateProductFragment;
 import com.example.mvvm_crud.util.Constants;
 import com.example.mvvm_crud.viewmodel.ProductViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -64,14 +65,14 @@ public class HomeFragment extends Fragment implements ItemClickListener {
 
     private FragmentHomeBinding binding;
     private SharedPreferences sharedPreferences;
-    private String username, userId, email;
+    private String username, userId, email, price;
     private ProductViewModel productViewModel;
     private ProductAdapter productAdapter;
     private GridLayoutManager gridLayoutManager;
     private List<ProductsModel> productsModelList;
     private BottomSheetBehavior bottomSheetBehavior;
-    private String productId = null;
-    private Integer productPostion;
+    private String productId = null, image;
+
     private File file;
 
     @Override
@@ -220,6 +221,19 @@ public class HomeFragment extends Fragment implements ItemClickListener {
             validateInsertData();
         });
 
+        binding.btnEdit.setOnClickListener(view -> {
+            Fragment fragment = new UpdateProductFragment();
+            Bundle arg = new Bundle();
+            arg.putString("id", productId);
+            arg.putString("product_name", binding.tvProductName.getText().toString());
+            arg.putString("price", price);
+            arg.putString("desc", binding.tvDesc.getText().toString());
+            arg.putString("image", image);
+            fragment.setArguments(arg);
+            getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.mainFrame, fragment)
+                    .commit();
+        });
+
     }
 
     private void checkPermissionExternalStorage() {
@@ -257,6 +271,7 @@ public class HomeFragment extends Fragment implements ItemClickListener {
         }
     }
 
+
     private void insertData() {
         HashMap map = new HashMap();
         map.put("product_name", RequestBody.create(MediaType.parse("text/plain"), binding.etProductName.getText().toString()));
@@ -275,6 +290,7 @@ public class HomeFragment extends Fragment implements ItemClickListener {
                     binding.etDesc.setText("");
                     binding.etProductPrice.setText("");
                     binding.etProductName.setText("");
+                    file = null;
                     getProduct();
                 }else {
                     showToast(responseModel.getMessage());
@@ -354,20 +370,30 @@ public class HomeFragment extends Fragment implements ItemClickListener {
     public void onItemClick(Integer potion, Object model) {
         ProductsModel productsModel = (ProductsModel) model;
         showBottomSheet();
+
+        // settext bottom sheet detail product
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         binding.rlDetail.setVisibility(View.VISIBLE);
         binding.tvProductName.setText(productsModel.getProduct_name());
         binding.tvPrice.setText("Rp. " + decimalFormat.format(Double.parseDouble(productsModel.getPrice())));
         binding.tvDesc.setText(productsModel.getDescription());
-        productId = productsModel.getId();
+        Glide.with(getContext()).load(productsModel.getImage()).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(binding.ivFlwer);
 
+        // set value
+        productId = productsModel.getId();
+        image = productsModel.getImage();
+        price = productsModel.getPrice();
+
+        // validate null data
         if (potion == null && productsModel.getId() == null) {
             binding.btnEdit.setEnabled(false);
             binding.btnDelete.setEnabled(false);
         }
 
-        Glide.with(getContext()).load(productsModel.getImage()).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(binding.ivFlwer);
+
+
+
     }
 
     private ActivityResultLauncher<String> getContentLauncher = registerForActivityResult(
@@ -439,5 +465,11 @@ public class HomeFragment extends Fragment implements ItemClickListener {
         outputStream.flush();
         outputStream.close();
         inputStream.close();
+    }
+
+    @Override
+    public void onDestroy() {
+        binding = null;
+        super.onDestroy();
     }
 }

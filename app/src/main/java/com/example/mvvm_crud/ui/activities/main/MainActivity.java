@@ -10,8 +10,8 @@ import android.view.MenuItem;
 import com.example.mvvm_crud.R;
 import com.example.mvvm_crud.databinding.ActivityMainBinding;
 import com.example.mvvm_crud.ui.fragments.main.HomeFragment;
-import com.example.mvvm_crud.ui.fragments.main.ProfileFragment;
-import com.example.mvvm_crud.ui.fragments.main.SearchFragment;
+import com.example.mvvm_crud.ui.fragments.main.profile.ProfileFragment;
+import com.example.mvvm_crud.ui.fragments.main.search.SearchFragment;
 import com.google.android.material.navigation.NavigationBarView;
 
 import dagger.hilt.android.AndroidEntryPoint;
